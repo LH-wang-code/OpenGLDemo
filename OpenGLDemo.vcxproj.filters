@@ -22,6 +22,9 @@
     <Filter Include="源文件\Demo\skyboxShader">
       <UniqueIdentifier>{b2013dfe-0bbb-4d3f-8579-88f9432e8871}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Demo\floor">
+      <UniqueIdentifier>{4c9c5aea-d896-4382-bf3e-aac2ace01900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -69,6 +72,12 @@
     </None>
     <None Include="fragmentShaderSource_skybox.GLSL">
       <Filter>源文件\Demo\skyboxShader</Filter>
+    </None>
+    <None Include="vertexShaderSource_floor.GLSL">
+      <Filter>源文件\Demo\floor</Filter>
+    </None>
+    <None Include="fragmentSjaderSource_floor.GLSL">
+      <Filter>源文件\Demo\floor</Filter>
     </None>
   </ItemGroup>
 </Project>

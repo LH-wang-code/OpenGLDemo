@@ -124,7 +124,38 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
+unsigned int quadVAO=0;
+unsigned int quadVBO;
+void renderQuad()
+{
+	if (quadVAO == 0)
+	{
+		float quadVertices[] = {
+		 10.0f, -0.5f,  10.0f,  2.0f, 0.0f,
+		-10.0f, -0.5f,  10.0f,  0.0f, 0.0f,
+		-10.0f, -0.5f, -10.0f,  0.0f, 2.0f,
 
+		 10.0f, -0.5f,  10.0f,  2.0f, 0.0f,
+		-10.0f, -0.5f, -10.0f,  0.0f, 2.0f,
+		 10.0f, -0.5f, -10.0f,  2.0f, 2.0f
+		};
+
+		glGenVertexArrays(1, &quadVAO);
+		glGenBuffers(1, &quadVBO);
+		glBindVertexArray(quadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glBindVertexArray(0); // 解绑 VAO
+		glBindBuffer(GL_ARRAY_BUFFER, 0); // 解绑 VBO
+	}
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
+}
 
 
 int main()
@@ -160,7 +191,6 @@ int main()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-
 
 	float skyboxVertices[] = {
 		        -1.0f,  1.0f, -1.0f,
@@ -215,7 +245,12 @@ int main()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+
+
 	Shader skyboxShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_skybox.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_skybox.GLSL");
+
+	Shader floorShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_floor.GLSL","E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentSjaderSource_floor.GLSL");
+
 
 	vector<std::string>faces
     {
@@ -226,13 +261,14 @@ int main()
         "F:/OpenGLImage/skybox/bottom.jpg",
         "F:/OpenGLImage/skybox/front.jpg",
         "F:/OpenGLImage/skybox/back.jpg"
-      
     };
 	unsigned int cubemapTexture = loadCubemap(faces);
-
+	unsigned int floorTexture = loadTexture("F:/OpenGLImage/metal.png");
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
 
+	floorShader.use();
+	floorShader.setInt("floorTexture", 0);
 	while (!glfwWindowShouldClose(window))
 	{
 		float currentFrame = static_cast<float>(glfwGetTime());
@@ -249,7 +285,15 @@ int main()
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 
+		floorShader.use();
+		floorShader.setMat4("projection", projection);
+		floorShader.setMat4("view", view);
+		floorShader.setMat4("model", model);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, floorTexture);
+		renderQuad();
 
+		
 
 		glDepthFunc(GL_LEQUAL);
 
