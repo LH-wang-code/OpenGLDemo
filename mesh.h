@@ -14,6 +14,7 @@
 using namespace std;
 
 #define MAX_BONE_INFLUENCE 4
+//这是一个顶点，一系列的顶点构成一个网格，这里包括位置，法线，材质，切线，副切线
 
 struct Vertex {
 
@@ -25,7 +26,7 @@ struct Vertex {
     int m_BoneIDs[MAX_BONE_INFLUENCE];
     float m_Weights[MAX_BONE_INFLUENCE];
 };
-
+//存储纹理信息，包括纹理id，类型（漫反射，镜面光），，路径
 struct Texture {
     unsigned int id;
     string type;
@@ -34,17 +35,19 @@ struct Texture {
 
 class Mesh {
 public:
+
+    //网格数据，包括定点信息，位置和纹理
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture>      textures;
     unsigned int VAO;
-
+    //构造函数
     Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
     {
         this->vertices = vertices;
         this->indices = indices;
         this->textures = textures;
-        setupMesh();
+        setupMesh();//该函数用于绑定各种数据传给着色器
     }
     void Draw(Shader& shader)
     {
@@ -95,16 +98,17 @@ private:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
 
-
+        //因为我们知道结构体内存是连续的，所以我们可以直接取数据
+        //第一个是顶点
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
         glEnableVertexAttribArray(0);
-
+        //第二个是法线
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
         glEnableVertexAttribArray(1);
-
+        //第三个是顶点纹理坐标,后边以此类推都是vertex里边的
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
         glEnableVertexAttribArray(2);
-
+        
         glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangent));
         glEnableVertexAttribArray(3);
 

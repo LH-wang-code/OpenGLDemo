@@ -25,6 +25,9 @@
     <Filter Include="源文件\Demo\floor">
       <UniqueIdentifier>{4c9c5aea-d896-4382-bf3e-aac2ace01900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Demo\mount">
+      <UniqueIdentifier>{449d100d-cbe2-475c-9372-3fb5914ad69e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -78,6 +81,12 @@
     </None>
     <None Include="fragmentSjaderSource_floor.GLSL">
       <Filter>源文件\Demo\floor</Filter>
+    </None>
+    <None Include="vertexShaderSource_mount.GLSL">
+      <Filter>源文件\Demo\mount</Filter>
+    </None>
+    <None Include="fragmentShaderSource_mount.GLSL">
+      <Filter>源文件\Demo\mount</Filter>
     </None>
   </ItemGroup>
 </Project>

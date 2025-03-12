@@ -33,13 +33,13 @@ public:
     string directory;
     bool gammaCorrection;
 
-
+    //加载文件
     Model(string const& path, bool gamma = false) : gammaCorrection(gamma)
     {
         loadModel(path);
     }
 
-
+   //遍历所有网格使用他们的draw函数
     void Draw(Shader& shader)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
@@ -60,30 +60,30 @@ private:
             return;
         }
 
-        directory = path.substr(0, path.find_last_of('/'));
+        directory = path.substr(0, path.find_last_of('\\'));
 
-
+        //Assimp的每一个节点包含多个网格索引，我们进入根节点
         processNode(scene->mRootNode, scene);
     }
 
 
     void processNode(aiNode* node, const aiScene* scene)
     {
-
+        //处理所有的节点上的网格
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
 
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
             meshes.push_back(processMesh(mesh, scene));
         }
-
+        //遍历所有儿子节点
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
             processNode(node->mChildren[i], scene);
         }
 
     }
-
+    //获取网格数据
     Mesh processMesh(aiMesh* mesh, const aiScene* scene)
     {
 
@@ -133,7 +133,7 @@ private:
 
             vertices.push_back(vertex);
         }
-
+        //存储每一个面的索引
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             aiFace face = mesh->mFaces[i];
@@ -141,7 +141,7 @@ private:
             for (unsigned int j = 0; j < face.mNumIndices; j++)
                 indices.push_back(face.mIndices[j]);
         }
-
+        //一个网格包含一个指向材质对象的索引，通过mMaterials数组获取网格材质
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
 
@@ -162,16 +162,16 @@ private:
         return Mesh(vertices, indices, textures);
     }
 
-
+    //遍历给定纹理类型type的所有纹理位置，并加载和生成纹理
     vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName)
     {
         vector<Texture> textures;
-        for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+        for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)//获取纹理数量
         {
             aiString str;
-            mat->GetTexture(type, i, &str);
+            mat->GetTexture(type, i, &str);//获取文件位置
 
-            bool skip = false;
+            bool skip = false;//用于判断纹理是否被加载过，加载过的直接放到列表不用再加载一次占用空间
             for (unsigned int j = 0; j < textures_loaded.size(); j++)
             {
                 if (std::strcmp(textures_loaded[j].path.data(), str.C_Str()) == 0)
@@ -199,7 +199,7 @@ private:
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
     string filename = string(path);
-    filename = directory + '/' + filename;
+    filename = directory + '\\' + filename;
 
     unsigned int textureID;
     glGenTextures(1, &textureID);

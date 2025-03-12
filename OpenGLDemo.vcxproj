@@ -146,11 +146,13 @@
   <ItemGroup>
     <None Include="fragmentShaderSource_AssimpLight.GLSL" />
     <None Include="fragmentShaderSource_model.GLSL" />
+    <None Include="fragmentShaderSource_mount.GLSL" />
     <None Include="fragmentShaderSource_skybox.GLSL" />
     <None Include="fragmentSjaderSource_floor.GLSL" />
     <None Include="vertexShaderSource_AssimpLight.GLSL" />
     <None Include="vertexShaderSource_floor.GLSL" />
     <None Include="vertexShaderSource_model.GLSL" />
+    <None Include="vertexShaderSource_mount.GLSL" />
     <None Include="vertexShaderSource_skybox.GLSL" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

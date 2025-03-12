@@ -251,16 +251,18 @@ int main()
 
 	Shader floorShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_floor.GLSL","E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentSjaderSource_floor.GLSL");
 
+	Shader mountShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_mount.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_mount.GLSL");
 
+	Model Mountain("F:\\OpenGLImage\\mount-snowysaw\\mount-snowysaw.quads.obj");
 	vector<std::string>faces
     {
-        "F:/OpenGLImage/skybox/right.jpg",
-         "F:/OpenGLImage/skybox/left.jpg",
-         "F:/OpenGLImage/skybox/top.jpg",
+        "F:\\OpenGLImage\\skybox\\right.jpg",
+         "F:\\OpenGLImage\\skybox\\left.jpg",
+         "F:\\OpenGLImage\\skybox\\top.jpg",
         
-        "F:/OpenGLImage/skybox/bottom.jpg",
-        "F:/OpenGLImage/skybox/front.jpg",
-        "F:/OpenGLImage/skybox/back.jpg"
+        "F:\\OpenGLImage\\skybox\\bottom.jpg",
+        "F:\\OpenGLImage\\skybox\\front.jpg",
+        "F:\\OpenGLImage\\skybox\\back.jpg"
     };
 	unsigned int cubemapTexture = loadCubemap(faces);
 	unsigned int floorTexture = loadTexture("F:/OpenGLImage/metal.png");
@@ -292,8 +294,11 @@ int main()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
 		renderQuad();
-
-		
+		mountShader.use();
+		mountShader.setMat4("projection", projection);
+		mountShader.setMat4("view", view);
+		mountShader.setMat4("model", model);
+		Mountain.Draw(mountShader);
 
 		glDepthFunc(GL_LEQUAL);
 
