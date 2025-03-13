@@ -141,19 +141,27 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="Scenario.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragmentShaderSource_AssimpLight.GLSL" />
-    <None Include="fragmentShaderSource_model.GLSL" />
+    <None Include="ambient.GLSL" />
+    <None Include="diffuse.GLSL" />
+    <None Include="fragmentShaderSource_light.GLSL" />
     <None Include="fragmentShaderSource_mount.GLSL" />
+    <None Include="fragmentShaderSource_shadow.GLSL" />
+    <None Include="fragmentShaderSource_shadowmap.GLSL" />
     <None Include="fragmentShaderSource_skybox.GLSL" />
+    <None Include="fragmentShaderSource_tree.GLSL" />
+    <None Include="fragmentShadow_depthmap.GLSL" />
     <None Include="fragmentSjaderSource_floor.GLSL" />
-    <None Include="vertexShaderSource_AssimpLight.GLSL" />
+    <None Include="specular.GLSL" />
+    <None Include="vertexShaderSource_depthmap.GLSL" />
     <None Include="vertexShaderSource_floor.GLSL" />
-    <None Include="vertexShaderSource_model.GLSL" />
+    <None Include="vertexShaderSource_light.GLSL" />
     <None Include="vertexShaderSource_mount.GLSL" />
+    <None Include="vertexShaderSource_shadow.GLSL" />
+    <None Include="vertexShaderSource_shadowmap.GLSL" />
     <None Include="vertexShaderSource_skybox.GLSL" />
+    <None Include="vertexShaderSource_tree.GLSL" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

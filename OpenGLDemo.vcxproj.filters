@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="源文件\test">
-      <UniqueIdentifier>{ddd786cc-fab1-4b7e-bb21-ed78bac7ca87}</UniqueIdentifier>
-    </Filter>
     <Filter Include="源文件\Demo">
       <UniqueIdentifier>{1cca66c4-6fe9-4928-9dd3-b84b8024b27b}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,18 @@
     </Filter>
     <Filter Include="源文件\Demo\mount">
       <UniqueIdentifier>{449d100d-cbe2-475c-9372-3fb5914ad69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Demo\light">
+      <UniqueIdentifier>{f07ce2f5-1fd7-4332-8d5c-a4b3cf531301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Demo\calculateLighting">
+      <UniqueIdentifier>{5bd1eaac-c013-436b-ad7f-50350b319847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Demo\tree">
+      <UniqueIdentifier>{be1f596c-6086-45a4-92f1-ff0daced6c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Demo\Shadow">
+      <UniqueIdentifier>{90b37e35-f3e5-42fe-a6c7-219ac27e542b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,26 +59,11 @@
     <ClCompile Include="glad.c">
       <Filter>头文件</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>源文件\test</Filter>
-    </ClCompile>
     <ClCompile Include="Scenario.cpp">
       <Filter>源文件\Demo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertexShaderSource_model.GLSL">
-      <Filter>源文件\test</Filter>
-    </None>
-    <None Include="fragmentShaderSource_model.GLSL">
-      <Filter>源文件\test</Filter>
-    </None>
-    <None Include="vertexShaderSource_AssimpLight.GLSL">
-      <Filter>源文件\test</Filter>
-    </None>
-    <None Include="fragmentShaderSource_AssimpLight.GLSL">
-      <Filter>源文件\test</Filter>
-    </None>
     <None Include="vertexShaderSource_skybox.GLSL">
       <Filter>源文件\Demo\skyboxShader</Filter>
     </None>
@@ -87,6 +81,45 @@
     </None>
     <None Include="fragmentShaderSource_mount.GLSL">
       <Filter>源文件\Demo\mount</Filter>
+    </None>
+    <None Include="vertexShaderSource_light.GLSL">
+      <Filter>源文件\Demo\light</Filter>
+    </None>
+    <None Include="fragmentShaderSource_light.GLSL">
+      <Filter>源文件\Demo\light</Filter>
+    </None>
+    <None Include="ambient.GLSL">
+      <Filter>源文件\Demo\calculateLighting</Filter>
+    </None>
+    <None Include="diffuse.GLSL">
+      <Filter>源文件\Demo\calculateLighting</Filter>
+    </None>
+    <None Include="specular.GLSL">
+      <Filter>源文件\Demo\calculateLighting</Filter>
+    </None>
+    <None Include="vertexShaderSource_tree.GLSL">
+      <Filter>源文件\Demo\tree</Filter>
+    </None>
+    <None Include="fragmentShaderSource_tree.GLSL">
+      <Filter>源文件\Demo\tree</Filter>
+    </None>
+    <None Include="vertexShaderSource_depthmap.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="fragmentShadow_depthmap.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="vertexShaderSource_shadowmap.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="fragmentShaderSource_shadowmap.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="vertexShaderSource_shadow.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="fragmentShaderSource_shadow.GLSL">
+      <Filter>源文件\Demo\Shadow</Filter>
     </None>
   </ItemGroup>
 </Project>
