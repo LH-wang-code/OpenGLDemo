@@ -230,6 +230,7 @@ void renderCube()
 }
 
 
+
 int main()
 {
 
@@ -354,7 +355,7 @@ int main()
 	//shadow
 	Shader simpleDepthShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_depthmap.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShadow_depthmap.GLSL");
 	Shader debugDepthQuad("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadowmap.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadowmap.GLSL");
-	Shader shadowShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadow.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadow.GLSL");
+	//Shader shadowShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadow.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadow.GLSL");
 
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
@@ -385,13 +386,13 @@ int main()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//阴影贴图
-	shadowShader.use();
-	shadowShader.setInt("diffuseTexture", 0);
-	shadowShader.setInt("shadowMap", 1);
+	//shadowShader.use();
+	//shadowShader.setInt("diffuseTexture", 0);
+	//shadowShader.setInt("shadowMap", 1);
 
 	debugDepthQuad.use();
 	debugDepthQuad.setInt("depthMap", 0);
-	glm::vec3 lightPos(glm::vec3(0.0f, 55.0f, 10.0f));
+	glm::vec3 lightPos(glm::vec3(0.0f, 150.0f, 100.0f));
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -407,18 +408,17 @@ int main()
 
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 1.0f, far_plane = 7.5f;
-		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		float near_plane = 0.1f, far_plane = 750.0f;
+		lightProjection = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, near_plane, far_plane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
-
+		//这里我们将所有点转换到光空间
 		simpleDepthShader.use();
 		simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		
 
 		//trans data to skyboxshader;向着色器传送数据
 
@@ -427,12 +427,17 @@ int main()
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, floorTexture);
+		//floor
 		simpleDepthShader.setMat4("model", model);
 		renderQuad();
+
+		//mountain
 		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 		model = glm::translate(model, glm::vec3(0.0f, 55.0f, 10.0f));
 		simpleDepthShader.setMat4("model", model);
-		Mountain.Draw(simpleDepthShader); // 渲染山脉
+		Mountain.Draw(simpleDepthShader); 
 		//从前边"zhushi"到这里都是在渲染阴影的轮廓，可以这样理解
 		
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -448,68 +453,73 @@ int main()
 		model = glm::mat4(1.0f);
 
 
-		shadowShader.use();
-		shadowShader.setMat4("projection", projection);
-		shadowShader.setMat4("view", view);
-		shadowShader.setVec3("viewPos", camera.Position);
-		shadowShader.setVec3("lightPos", lightPos);
-		shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		//shadowShader.use();
+		//shadowShader.setMat4("projection", projection);
+		//shadowShader.setMat4("view", view);
+		//shadowShader.setVec3("viewPos", camera.Position);
+		//shadowShader.setVec3("lightPos", lightPos);
+		//shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		//shadowShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+		//shadowShader.setVec3("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+		//shadowShader.setVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		//shadowShader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		//shadowShader.setFloat("material.shininess", 32.0f);
 
+	
+		//floorShader.use();
+		//floorShader.setMat4("projection", projection);
+		//floorShader.setMat4("view", view);
+		//floorShader.setMat4("model", model);
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, floorTexture);
+		//renderQuad();
 
-		floorShader.use();
-		floorShader.setMat4("projection", projection);
-		floorShader.setMat4("view", view);
-		floorShader.setMat4("model", model);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, floorTexture);
-		renderQuad();
+		////渲染山脉
+		//mountShader.use();
+		//model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		//model = glm::translate(model, glm::vec3(0.0f, 55.0f, 10.0f));
+		//mountShader.setMat4("projection", projection);
+		//mountShader.setMat4("view", view);
+		//mountShader.setMat4("model", model);
+		//Mountain.Draw(mountShader);
+		///*
+		////cgaxis
+		//treeShader.use();
+		//model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(0.0f, 55.0f, 20.0f));
+		//treeShader.setMat4("projection", projection);
+		//treeShader.setMat4("view", view);
+		//treeShader.setMat4("model", model);
+		//Cgaxis.Draw(treeShader);
+		//*/
+		////light shader
+		//// 
+		////立方体光源
+		//lightShader.use();
+		//model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//lightShader.setMat4("projection", projection);
+		//lightShader.setMat4("view", view);
+		//lightShader.setMat4("model", model);
+		//renderCube();
+		//
+		//////天空盒
+		////glDepthFunc(GL_LEQUAL);
 
-		//渲染山脉
-		mountShader.use();
-		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-		model = glm::translate(model, glm::vec3(0.0f, 55.0f, 10.0f));
-		mountShader.setMat4("projection", projection);
-		mountShader.setMat4("view", view);
-		mountShader.setMat4("model", model);
-		Mountain.Draw(mountShader);
-		/*
-		//cgaxis
-		treeShader.use();
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 55.0f, 20.0f));
-		treeShader.setMat4("projection", projection);
-		treeShader.setMat4("view", view);
-		treeShader.setMat4("model", model);
-		Cgaxis.Draw(treeShader);
-		*/
-		//light shader
-		// 
-		//立方体光源
-		lightShader.use();
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		lightShader.setMat4("projection", projection);
-		lightShader.setMat4("view", view);
-		lightShader.setMat4("model", model);
-		renderCube();
-		
-		//天空盒
-		glDepthFunc(GL_LEQUAL);
+		////skyboxShader.use();
+		////view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+		////skyboxShader.setMat4("view", view);
+		////skyboxShader.setMat4("projection", projection);
 
-		skyboxShader.use();
-		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-		skyboxShader.setMat4("view", view);
-		skyboxShader.setMat4("projection", projection);
-
-		glBindVertexArray(skyVAO);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-		glDepthFunc(GL_LESS);
-
-		//glViewport(0, 0, WIDTH, HEIGHT);
-
+		////glBindVertexArray(skyVAO);
+		////glActiveTexture(GL_TEXTURE0);
+		////glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		////glDrawArrays(GL_TRIANGLES, 0, 36);
+		////glBindVertexArray(0);
+		////glDepthFunc(GL_LESS);
+		//// */
+		glViewport(0, 0, WIDTH, HEIGHT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		debugDepthQuad.use();
 		debugDepthQuad.setFloat("near_plane", near_plane);
