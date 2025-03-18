@@ -422,7 +422,7 @@ int main()
 
 	debugDepthQuad.use();
 	debugDepthQuad.setInt("depthMap", 0);
-	glm::vec3 lightPos(glm::vec3(250.0f, 50.0f, 0.0f));
+	glm::vec3 lightPos(glm::vec3(0.0f, 500.0f, 500.0f));
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -438,7 +438,7 @@ int main()
 
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 1.0f, far_plane = 75.0f;
+		float near_plane = 0.1f, far_plane = 750.0f;
 		lightProjection = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, near_plane, far_plane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
@@ -478,7 +478,7 @@ int main()
 		//主渲染，渲染我们的场景
 		//渲染地板
 
-		/*
+		
 
 		model = glm::mat4(1.0f);
 
