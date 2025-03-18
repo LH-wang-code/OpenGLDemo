@@ -131,13 +131,13 @@ void renderQuad()
 	if (quadVAO == 0)
 	{
 		float quadVertices[] = {
-		 10.0f, -0.5f,  10.0f,  2.0f, 0.0f,
-		-10.0f, -0.5f,  10.0f,  0.0f, 0.0f,
-		-10.0f, -0.5f, -10.0f,  0.0f, 2.0f,
+		 500.0f, -0.5f,  500.0f,  2.0f, 0.0f,
+		-500.0f, -0.5f,  500.0f,  0.0f, 0.0f,
+		-500.0f, -0.5f, -500.0f,  0.0f, 2.0f,
 
-		 10.0f, -0.5f,  10.0f,  2.0f, 0.0f,
-		-10.0f, -0.5f, -10.0f,  0.0f, 2.0f,
-		 10.0f, -0.5f, -10.0f,  2.0f, 2.0f
+		 500.0f, -0.5f,  500.0f,  2.0f, 0.0f,
+		-500.0f, -0.5f, -500.0f,  0.0f, 2.0f,
+		 500.0f, -0.5f, -500.0f,  2.0f, 2.0f
 		};
 
 		glGenVertexArrays(1, &quadVAO);
@@ -165,47 +165,47 @@ void renderCube()
 	{
 		float vertices[] = {
 			// back face
-			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
-			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
-			 1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f, // bottom-right         
-			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
-			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
-			-1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, // top-left
+			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, 
+			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,          
+			 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, 
+			-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+			-1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f, 
 			// front face
-			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
-			 1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, // bottom-right
-			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
-			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, // top-right
-			-1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, // top-left
-			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, // bottom-left
+			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, 
+			 1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f, 
+			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f, 
+			 1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+			-1.0f,  1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f, 
+			-1.0f, -1.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f, 
 			// left face
-			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
-			-1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-left
-			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
-			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-left
-			-1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-right
-			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-right
+			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, 
+			-1.0f,  1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f, 
+			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, 
+			-1.0f, -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f, 
+			-1.0f, -1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f, 
+			-1.0f,  1.0f,  1.0f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f, 
 			// right face
-			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
-			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
-			 1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f, // top-right         
-			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, // bottom-right
-			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, // top-left
-			 1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, // bottom-left     
+			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, 
+			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f, 
+			 1.0f,  1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,        
+			 1.0f, -1.0f, -1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+			 1.0f,  1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f, 
+			 1.0f, -1.0f,  1.0f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,  
 			 // bottom face
-			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
-			  1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, // top-left
-			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
-			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, // bottom-left
-			 -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, // bottom-right
-			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, // top-right
+			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, 
+			  1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f, 
+			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, 
+			  1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f, 
+			 -1.0f, -1.0f,  1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f, 
+			 -1.0f, -1.0f, -1.0f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f, 
 			 // top face
-			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
-			  1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
-			  1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top-right     
-			  1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, // bottom-right
-			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
-			 -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left        
+			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+			  1.0f,  1.0f , 1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, 
+			  1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,      
+			  1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f, 
+			 -1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, 
+			 -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f         
 		};
 		glGenVertexArrays(1, &cubeVAO);
 		glGenBuffers(1, &cubeVBO);
@@ -229,7 +229,34 @@ void renderCube()
 	glBindVertexArray(0);
 }
 
-
+unsigned int QuadVAO = 0;
+unsigned int QuadVBO;
+void RenderQuad()
+{
+	if (QuadVAO == 0)
+	{
+		float quadVertices[] = {
+			// positions        // texture Coords
+			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+		};
+		// setup plane VAO
+		glGenVertexArrays(1, &QuadVAO);
+		glGenBuffers(1, &QuadVBO);
+		glBindVertexArray(QuadVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, QuadVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	}
+	glBindVertexArray(QuadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
+}
 
 int main()
 {
@@ -338,6 +365,7 @@ int main()
 	//	Model Cgaxis("F:\\OpenGLImage\\tree.obj");
 
 		//std::cout << 111 << std::endl;
+	//skybox
 	vector<std::string>faces
 	{
 		"F:\\OpenGLImage\\skybox\\right.jpg",
@@ -349,13 +377,15 @@ int main()
 		"F:\\OpenGLImage\\skybox\\back.jpg"
 	};
 	unsigned int cubemapTexture = loadCubemap(faces);
+
+	//floor texture
 	unsigned int floorTexture = loadTexture("F:/OpenGLImage/metal.png");
 
 
 	//shadow
 	Shader simpleDepthShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_depthmap.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShadow_depthmap.GLSL");
 	Shader debugDepthQuad("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadowmap.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadowmap.GLSL");
-	//Shader shadowShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadow.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadow.GLSL");
+	Shader shadowShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_shadow.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_shadow.GLSL");
 
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
@@ -386,13 +416,13 @@ int main()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//阴影贴图
-	//shadowShader.use();
-	//shadowShader.setInt("diffuseTexture", 0);
-	//shadowShader.setInt("shadowMap", 1);
+	shadowShader.use();
+	shadowShader.setInt("diffuseTexture", 0);
+	shadowShader.setInt("shadowMap", 1);
 
 	debugDepthQuad.use();
 	debugDepthQuad.setInt("depthMap", 0);
-	glm::vec3 lightPos(glm::vec3(0.0f, 150.0f, 100.0f));
+	glm::vec3 lightPos(glm::vec3(250.0f, 50.0f, 0.0f));
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -408,7 +438,7 @@ int main()
 
 		glm::mat4 lightProjection, lightView;
 		glm::mat4 lightSpaceMatrix;
-		float near_plane = 0.1f, far_plane = 750.0f;
+		float near_plane = 1.0f, far_plane = 75.0f;
 		lightProjection = glm::ortho(-1000.0f, 1000.0f, -1000.0f, 1000.0f, near_plane, far_plane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
@@ -448,42 +478,42 @@ int main()
 		//主渲染，渲染我们的场景
 		//渲染地板
 
-
+		/*
 
 		model = glm::mat4(1.0f);
 
 
-		//shadowShader.use();
-		//shadowShader.setMat4("projection", projection);
-		//shadowShader.setMat4("view", view);
-		//shadowShader.setVec3("viewPos", camera.Position);
-		//shadowShader.setVec3("lightPos", lightPos);
-		//shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-		//shadowShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-		//shadowShader.setVec3("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-		//shadowShader.setVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-		//shadowShader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-		//shadowShader.setFloat("material.shininess", 32.0f);
+		shadowShader.use();
+		shadowShader.setMat4("projection", projection);
+		shadowShader.setMat4("view", view);
+		shadowShader.setVec3("viewPos", camera.Position);
+		shadowShader.setVec3("lightPos", lightPos);
+		shadowShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+		shadowShader.setVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+		shadowShader.setVec3("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+		shadowShader.setVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		shadowShader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		shadowShader.setFloat("material.shininess", 32.0f);
 
 	
-		//floorShader.use();
-		//floorShader.setMat4("projection", projection);
-		//floorShader.setMat4("view", view);
-		//floorShader.setMat4("model", model);
-		//glActiveTexture(GL_TEXTURE0);
-		//glBindTexture(GL_TEXTURE_2D, floorTexture);
-		//renderQuad();
+		floorShader.use();
+		floorShader.setMat4("projection", projection);
+		floorShader.setMat4("view", view);
+		floorShader.setMat4("model", model);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, floorTexture);
+		renderQuad();
 
-		////渲染山脉
-		//mountShader.use();
-		//model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-		//model = glm::translate(model, glm::vec3(0.0f, 55.0f, 10.0f));
-		//mountShader.setMat4("projection", projection);
-		//mountShader.setMat4("view", view);
-		//mountShader.setMat4("model", model);
-		//Mountain.Draw(mountShader);
-		///*
-		////cgaxis
+		//渲染山脉
+		mountShader.use();
+		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		model = glm::translate(model, glm::vec3(0.0f, 55.0f, 10.0f));
+		mountShader.setMat4("projection", projection);
+		mountShader.setMat4("view", view);
+		mountShader.setMat4("model", model);
+		Mountain.Draw(mountShader);
+	
+		//cgaxis
 		//treeShader.use();
 		//model = glm::mat4(1.0f);
 		//model = glm::translate(model, glm::vec3(0.0f, 55.0f, 20.0f));
@@ -491,34 +521,36 @@ int main()
 		//treeShader.setMat4("view", view);
 		//treeShader.setMat4("model", model);
 		//Cgaxis.Draw(treeShader);
-		//*/
-		////light shader
-		//// 
-		////立方体光源
-		//lightShader.use();
-		//model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(10.0f, 10.0f, 10.0f));
-		//lightShader.setMat4("projection", projection);
-		//lightShader.setMat4("view", view);
-		//lightShader.setMat4("model", model);
-		//renderCube();
+		//
+		//light shader
+		// 
+		//立方体光源
+		lightShader.use();
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		lightShader.setMat4("projection", projection);
+		lightShader.setMat4("view", view);
+		lightShader.setMat4("model", model);
+		renderCube();
 		//
 		//////天空盒
-		////glDepthFunc(GL_LEQUAL);
+		glDepthFunc(GL_LEQUAL);
 
-		////skyboxShader.use();
-		////view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
-		////skyboxShader.setMat4("view", view);
-		////skyboxShader.setMat4("projection", projection);
+		skyboxShader.use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+		skyboxShader.setMat4("view", view);
+		skyboxShader.setMat4("projection", projection);
 
-		////glBindVertexArray(skyVAO);
-		////glActiveTexture(GL_TEXTURE0);
-		////glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-		////glDrawArrays(GL_TRIANGLES, 0, 36);
-		////glBindVertexArray(0);
-		////glDepthFunc(GL_LESS);
+		glBindVertexArray(skyVAO);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS);
+
+		
 		//// */
-		glViewport(0, 0, WIDTH, HEIGHT);
+		glViewport(0, 0, 800, 600);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		debugDepthQuad.use();
@@ -526,10 +558,12 @@ int main()
 		debugDepthQuad.setFloat("far_plane", far_plane);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
-		renderQuad();
+		RenderQuad();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 	}
+
+	return 0;
 }
