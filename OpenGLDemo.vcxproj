@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="Scenario.cpp" />
+    <ClCompile Include="Sceniario2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ambient.GLSL" />

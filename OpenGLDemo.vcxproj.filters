@@ -62,6 +62,9 @@
     <ClCompile Include="Scenario.cpp">
       <Filter>源文件\Demo</Filter>
     </ClCompile>
+    <ClCompile Include="Sceniario2.cpp">
+      <Filter>源文件\Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertexShaderSource_skybox.GLSL">
@@ -94,9 +97,6 @@
     <None Include="diffuse.GLSL">
       <Filter>源文件\Demo\calculateLighting</Filter>
     </None>
-    <None Include="specular.GLSL">
-      <Filter>源文件\Demo\calculateLighting</Filter>
-    </None>
     <None Include="vertexShaderSource_tree.GLSL">
       <Filter>源文件\Demo\tree</Filter>
     </None>
@@ -120,6 +120,9 @@
     </None>
     <None Include="fragmentShaderSource_shadow.GLSL">
       <Filter>源文件\Demo\Shadow</Filter>
+    </None>
+    <None Include="specular.GLSL">
+      <Filter>头文件</Filter>
     </None>
   </ItemGroup>
 </Project>
