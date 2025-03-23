@@ -22,3 +22,12 @@ main函数在Scenario.cpp文件，着色器文件用到了floor，light，mount�
 绘制阴影贴图时，使用了绘制floor的renderQuad，范围大于1，阴影显示不出来，更换renderQuad后绘制阴影成功,但是方向不太对且好像只有地板（？），模型貌似没有绘制进去
 
 ![1742309698037](https://github.com/user-attachments/assets/93581f99-dd36-4fe2-bfb0-560b64fe5852)
+
+
+#####3.22 问题更新
+本次提交解决了加载模型的问题，本次改动实现了影子的绘制，但我的地板和所有的纹理都不见了，还需要继续排查问题，我觉得可能是着色器的一些参数有问题，明天再看看
+
+本次改动将所有的物体绘制都放到了shaodw着色器中进行渲染，之前调用各种着色器太混乱了，所以这次只用到了shadow相关着色器
+
+
+![7963e49141fb4c929f668515eedea3c](https://github.com/user-attachments/assets/341ef89c-916e-48cf-be61-3b14a5660468)
