@@ -48,7 +48,7 @@ void main()
     vec3 normal = normalize(fs_in.Normal);
     vec3 lightColor = vec3(0.3);
 
-    vec3 ambient = 0.3 * lightColor;
+    vec3 ambient = 0.5 * lightColor;
 
     vec3 lightDir = normalize(lightPos - fs_in.FragPos);
     float diff = max(dot(lightDir, normal), 0.0);

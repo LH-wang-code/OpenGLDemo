@@ -15,7 +15,7 @@
 #include <assimp/postprocess.h>
 
 //Model Mountain("F:\\OpenGLImage\\shanshi\\shanshi\\ShanShi.obj");
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 30.0f));
 
 unsigned int WIDTH = 800, HEIGHT = 600;
 bool firstMouse = true;
@@ -348,13 +348,13 @@ int main()
 	glEnableVertexAttribArray(0);
 	float floorVertices[] = {
 		// positions            // normals         // texcoords
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+		 100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
+		-100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+		-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
 
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
-		 25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
+		 100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
+		-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
+		 100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,  100.0f, 100.0f
 	};
 	vector<std::string>faces
 	{
@@ -381,7 +381,11 @@ int main()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glBindVertexArray(0);
 	Model models("F:\\OpenGLImage\\shanshi\\shanshi\\ShanShi.obj");
-	unsigned int floorTexture = loadTexture("F:\\OpenGLImage\\wood.png");
+
+	Model rock("F:\\OpenGLImage\\rock\\rock.obj");
+
+	unsigned int floorTexture = loadTexture("F:\\OpenGLImage\\grass.jpg");
+	unsigned int testTexture = loadTexture("F:\\OpenGLImage\\metal.png");
 	//帧缓冲
 	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	unsigned int depthMapFBO;
@@ -436,7 +440,7 @@ int main()
 		renderScene(simpleDepthShader);
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.01f));
+		model = glm::scale(model, glm::vec3(0.1f));
 		simpleDepthShader.setMat4("model", model);
 		models.Draw(simpleDepthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -454,8 +458,10 @@ int main()
 		shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.01f));
+		model = glm::scale(model, glm::vec3(0.1f));
 		shader.setMat4("model", model);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, testTexture);
 		models.Draw(shader);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
