@@ -15,7 +15,7 @@
 #include <assimp/postprocess.h>
 
 //Model Mountain("F:\\OpenGLImage\\shanshi\\shanshi\\ShanShi.obj");
-Camera camera(glm::vec3(0.0f, 0.0f, 30.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, -30.0f));
 
 unsigned int WIDTH = 800, HEIGHT = 600;
 bool firstMouse = true;
@@ -383,9 +383,56 @@ int main()
 	Model models("F:\\OpenGLImage\\shanshi\\shanshi\\ShanShi.obj");
 
 	Model rock("F:\\OpenGLImage\\rock\\rock.obj");
-
+	Model tree("F:\\OpenGLImage\\tree\\tree.obj");
 	unsigned int floorTexture = loadTexture("F:\\OpenGLImage\\grass.jpg");
 	unsigned int testTexture = loadTexture("F:\\OpenGLImage\\metal.png");
+
+	//实例化树模型
+	unsigned int amount = 100;
+	glm::mat4* treeMatrices = new glm::mat4[amount];
+	srand(static_cast<unsigned int>(glfwGetTime()));
+	float radius = 250.0f;
+	float offset = 25.0f;
+	for (unsigned int i = 0;i < amount;i++)
+	{
+		glm::mat4 model = glm::mat4(1.0f);
+		float angle = (float)i / (float)amount * 360.0f;
+		float displacement = (rand() % (int)(2 * offset * 100)) / 100.0f - offset;
+		float x = sin(angle) * radius + displacement;
+		float y = 0.0f;
+		float z = cos(angle) * radius + displacement;
+		model = glm::translate(model, glm::vec3(x, y, z));
+		float scale = static_cast<float>((rand() % 20) / 100.0 + 0.05);
+		model = glm::scale(model, glm::vec3(scale));
+		float rotAngle = static_cast<float>((rand() % 360));
+		model = glm::rotate(model, rotAngle, glm::vec3(0.4f, 0.6f, 0.8f));
+		treeMatrices[i] = model;
+	}
+	unsigned int buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::mat4), &treeMatrices[0], GL_STATIC_DRAW);
+	for (unsigned int i = 0; i < tree.meshes.size(); i++)
+	{
+		unsigned int VAO = rock.meshes[i].VAO;
+		glBindVertexArray(VAO);
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(sizeof(glm::vec4)));
+		glEnableVertexAttribArray(5);
+		glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(2 * sizeof(glm::vec4)));
+		glEnableVertexAttribArray(6);
+		glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)(3 * sizeof(glm::vec4)));
+
+		glVertexAttribDivisor(3, 1);
+		glVertexAttribDivisor(4, 1);
+		glVertexAttribDivisor(5, 1);
+		glVertexAttribDivisor(6, 1);
+
+		glBindVertexArray(0);
+	}
+
 	//帧缓冲
 	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	unsigned int depthMapFBO;
@@ -415,6 +462,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		bool isIstanced = false;
 		float currentFrame = static_cast<float>(glfwGetTime());
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
@@ -431,7 +479,7 @@ int main()
 		lightSpaceMatrix = lightProjection * lightView;
 		simpleDepthShader.use();
 		simpleDepthShader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
-
+		
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
@@ -443,6 +491,11 @@ int main()
 		model = glm::scale(model, glm::vec3(0.1f));
 		simpleDepthShader.setMat4("model", model);
 		models.Draw(simpleDepthShader);
+		isIstanced = true;
+		simpleDepthShader.setBool("isIstanced", isIstanced);
+		
+
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		//画完之后重置窗口
