@@ -293,8 +293,9 @@ int main()
 
 
 	Shader skyboxShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_skybox.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_skybox.GLSL");
-	
-		float skyboxVertices[] = {
+	Shader TreeShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_tree.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_tree.GLSL");
+
+	float skyboxVertices[] = {
 				-1.0f,  1.0f, -1.0f,
 				-1.0f, -1.0f, -1.0f,
 				 1.0f, -1.0f, -1.0f,
@@ -386,13 +387,13 @@ int main()
 	Model tree("F:\\OpenGLImage\\tree\\tree.obj");
 	unsigned int floorTexture = loadTexture("F:\\OpenGLImage\\grass.jpg");
 	unsigned int testTexture = loadTexture("F:\\OpenGLImage\\metal.png");
-
+	
 	//实例化树模型
 	unsigned int amount = 100;
 	glm::mat4* treeMatrices = new glm::mat4[amount];
 	srand(static_cast<unsigned int>(glfwGetTime()));
-	float radius = 250.0f;
-	float offset = 25.0f;
+	float radius = 100.0f;
+	float offset = 15.0f;
 	for (unsigned int i = 0;i < amount;i++)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
@@ -404,8 +405,6 @@ int main()
 		model = glm::translate(model, glm::vec3(x, y, z));
 		float scale = static_cast<float>((rand() % 20) / 100.0 + 0.05);
 		model = glm::scale(model, glm::vec3(scale));
-		float rotAngle = static_cast<float>((rand() % 360));
-		model = glm::rotate(model, rotAngle, glm::vec3(0.4f, 0.6f, 0.8f));
 		treeMatrices[i] = model;
 	}
 	unsigned int buffer;
@@ -414,7 +413,7 @@ int main()
 	glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::mat4), &treeMatrices[0], GL_STATIC_DRAW);
 	for (unsigned int i = 0; i < tree.meshes.size(); i++)
 	{
-		unsigned int VAO = rock.meshes[i].VAO;
+		unsigned int VAO = tree.meshes[i].VAO;
 		glBindVertexArray(VAO);
 		glEnableVertexAttribArray(3);
 		glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (void*)0);
@@ -491,7 +490,7 @@ int main()
 		model = glm::scale(model, glm::vec3(0.1f));
 		simpleDepthShader.setMat4("model", model);
 		models.Draw(simpleDepthShader);
-		isIstanced = true;
+		isIstanced = true;//这里最后画的的实例化数组
 		simpleDepthShader.setBool("isIstanced", isIstanced);
 		
 
@@ -499,6 +498,7 @@ int main()
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		//画完之后重置窗口
+		isIstanced = false;
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.use();
@@ -522,7 +522,46 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		renderScene(shader);
 
+		TreeShader.use();
+		TreeShader.setMat4("projection", projection);
+		TreeShader.setMat4("view", view);
 
+		TreeShader.use();
+		TreeShader.setInt("texture_diffuse1",0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, tree.textures_loaded[0].id);
+		for (unsigned int i = 0; i < tree.meshes.size(); i++)
+		{
+			glBindVertexArray(tree.meshes[i].VAO);
+			glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(tree.meshes[i].indices.size()), GL_UNSIGNED_INT, 0, amount);
+			glBindVertexArray(0);
+		}
+		//isIstanced = true;
+		//shader.setBool("isIstanced", isIstanced);
+		//shader.setMat4("model", glm::mat4(1.0f));
+
+		//if (!tree.textures_loaded.empty()) {
+		//	glActiveTexture(GL_TEXTURE0);
+		//	glBindTexture(GL_TEXTURE_2D, tree.textures_loaded[0].id);
+		//	shader.setInt("texture_diffuse1", 0);
+		//}
+
+		// 确保实例化矩阵缓冲区绑定
+	/*	glBindBuffer(GL_ARRAY_BUFFER, buffer);*/
+
+		// 渲染所有网格
+		//for (unsigned int i = 0; i < tree.meshes.size(); i++) {
+		//	glBindVertexArray(tree.meshes[i].VAO);
+		//	glDrawElementsInstanced(
+		//		GL_TRIANGLES,
+		//		static_cast<unsigned int>(tree.meshes[i].indices.size()),
+		//		GL_UNSIGNED_INT,
+		//		0,
+		//		amount
+		//	);
+		//	glBindVertexArray(0);
+		//}
+		//画天空盒
 		glDepthFunc(GL_LEQUAL);
 		skyboxShader.use();
 		view = glm::mat4(glm::mat3(camera.GetViewMatrix())); 
