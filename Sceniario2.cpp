@@ -15,7 +15,7 @@
 #include <assimp/postprocess.h>
 
 //Model Mountain("F:\\OpenGLImage\\shanshi\\shanshi\\ShanShi.obj");
-Camera camera(glm::vec3(0.0f, 0.0f, -30.0f));
+Camera camera(glm::vec3(0.0f, 0.0f, 100.0f));
 
 unsigned int WIDTH = 800, HEIGHT = 600;
 bool firstMouse = true;
@@ -189,6 +189,7 @@ void renderCube()
 }
 unsigned int floorVAO;
 
+
 void renderScene(Shader &shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
@@ -215,7 +216,76 @@ void renderScene(Shader &shader)
 	//renderCube();
 }
 
+unsigned wallVAO=0, wallVBO = 0;
+void renderWall()
+{
+	float vertices[] = {
+		// 位置              // 法线           // 纹理坐标
+		// 前面 (2个三角形)
+		-5.0f, -5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,
+		 5.0f, -5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  1.0f, 0.0f,
+		 5.0f,  5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  1.0f, 1.0f,
 
+		 5.0f,  5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  1.0f, 1.0f,
+		-5.0f,  5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  0.0f, 1.0f,
+		-5.0f, -5.0f,  5.0f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,
+
+		// 后面 (2个三角形)
+		-5.0f, -5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+		 5.0f, -5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+		 5.0f,  5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+
+		 5.0f,  5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+		-5.0f,  5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+		-5.0f, -5.0f, -5.0f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+
+		// 左面 (2个三角形)
+		-5.0f, -5.0f, -5.0f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+		-5.0f, -5.0f,  5.0f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+		-5.0f,  5.0f,  5.0f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+
+		-5.0f,  5.0f,  5.0f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+		-5.0f,  5.0f, -5.0f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+		-5.0f, -5.0f, -5.0f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+
+		// 右面 (2个三角形)
+		 5.0f, -5.0f,  5.0f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+		 5.0f, -5.0f, -5.0f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+		 5.0f,  5.0f, -5.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+
+		 5.0f,  5.0f, -5.0f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+		 5.0f,  5.0f,  5.0f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+		 5.0f, -5.0f,  5.0f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+
+		 // 顶面 (2个三角形)
+		 -5.0f,  5.0f,  5.0f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+		  5.0f,  5.0f,  5.0f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+		  5.0f,  5.0f, -5.0f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+
+		  5.0f,  5.0f, -5.0f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+		 -5.0f,  5.0f, -5.0f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+		 -5.0f,  5.0f,  5.0f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+	};
+		glGenVertexArrays(1, &wallVAO);
+		glGenBuffers(1, &wallVBO);
+	
+		glBindBuffer(GL_ARRAY_BUFFER, wallVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBindVertexArray(wallVAO);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	
+	// render Cube
+	glBindVertexArray(wallVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 30);
+	glBindVertexArray(0);
+}
 unsigned int loadCubemap(vector<std::string>faces)
 {
     unsigned int textureID;
@@ -294,7 +364,7 @@ int main()
 
 	Shader skyboxShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_skybox.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_skybox.GLSL");
 	Shader TreeShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_tree.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_tree.GLSL");
-
+	Shader wallShader("E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\vertexShaderSource_wall.GLSL", "E:\\vstudioproject\\OpenGLDemo\\OpenGLDemo\\fragmentShaderSource_wall.GLSL");
 	float skyboxVertices[] = {
 				-1.0f,  1.0f, -1.0f,
 				-1.0f, -1.0f, -1.0f,
@@ -387,9 +457,14 @@ int main()
 	Model tree("F:\\OpenGLImage\\tree\\tree.obj");
 	unsigned int floorTexture = loadTexture("F:\\OpenGLImage\\grass.jpg");
 	unsigned int testTexture = loadTexture("F:\\OpenGLImage\\metal.png");
+	//墙，实现法线贴图，视差贴图的应用
+	unsigned int walldiffuseMap = loadTexture("F:/OpenGLImage/bricks2.jpg");
+    unsigned int wallnormalMap = loadTexture("F:/OpenGLImage/bricks2_normal.jpg");
+    unsigned int walldispMap = loadTexture("F:/OpenGLImage/bricks2_disp.jpg");
+	
 	
 	//实例化树模型
-	unsigned int amount = 100;
+	unsigned int amount = 10;
 	glm::mat4* treeMatrices = new glm::mat4[amount];
 	srand(static_cast<unsigned int>(glfwGetTime()));
 	float radius = 100.0f;
@@ -457,8 +532,16 @@ int main()
 	debugDepthQuad.use();
 	debugDepthQuad.setInt("depthMap", 0);
 
-	glm::vec3 lightPos(0.0f, 100.0f, 100.0f);
+	wallShader.use();
+	wallShader.setInt("diffuseMap", 0);
+	wallShader.setInt("normalMap", 0);
+	wallShader.setInt("dispMap", 0);
 
+	glm::vec3 lightPos(0.0f, 100.0f, 100.0f);
+	//glm::vec3 lightPos(0.5f, 1.0f, 0.3f);
+	//std::cout << "walldiffuseMap ID: " << walldiffuseMap << std::endl;
+	//std::cout << "wallnormalMap ID: " << wallnormalMap << std::endl;
+	//std::cout << "walldispMap ID: " << walldispMap << std::endl;
 	while (!glfwWindowShouldClose(window))
 	{
 		bool isIstanced = false;
@@ -482,17 +565,25 @@ int main()
 		glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
+		//draw the floor
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
 		renderScene(simpleDepthShader);
+		//moutain
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f));
 		simpleDepthShader.setMat4("model", model);
 		models.Draw(simpleDepthShader);
-		isIstanced = true;//这里最后画的的实例化数组
-		simpleDepthShader.setBool("isIstanced", isIstanced);
-		
+		//isIstanced = true;//这里最后画的的实例化数组
+		//simpleDepthShader.setBool("isIstanced", isIstanced);
+		//
+		//draw the wall
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 4.5f, 80.0f));
+		simpleDepthShader.setMat4("model", model);
+		renderWall();
+
 
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -502,6 +593,7 @@ int main()
 		glViewport(0, 0, WIDTH, HEIGHT);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shader.use();
+		//光空间矩阵
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.setMat4("projection", projection);
@@ -509,33 +601,60 @@ int main()
 		shader.setVec3("viewPos", camera.Position);
 		shader.setVec3("lightPos", lightPos);
 		shader.setMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+		//moutain
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.1f));
 		shader.setMat4("model", model);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, testTexture);
+
 		models.Draw(shader);
+		//floor
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		renderScene(shader);
+		
 
-		TreeShader.use();
-		TreeShader.setMat4("projection", projection);
-		TreeShader.setMat4("view", view);
+		//wall
+		wallShader.use();
+		wallShader.setVec3("lightPos", lightPos);
+		wallShader.setVec3("viewPos", camera.Position);
 
-		TreeShader.use();
-		TreeShader.setInt("texture_diffuse1",0);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 4.5f, 80.0f));
+		wallShader.setMat4("model", model);
+		wallShader.setMat4("projection", projection);
+		wallShader.setMat4("view", view);
+		wallShader.setFloat("height_scale",0.1f);
+		wallShader.setBool("parallax", true);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, tree.textures_loaded[0].id);
-		for (unsigned int i = 0; i < tree.meshes.size(); i++)
-		{
-			glBindVertexArray(tree.meshes[i].VAO);
-			glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(tree.meshes[i].indices.size()), GL_UNSIGNED_INT, 0, amount);
-			glBindVertexArray(0);
-		}
+        glBindTexture(GL_TEXTURE_2D, walldiffuseMap);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, wallnormalMap);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, walldispMap);
+		renderWall();
+
+		// 
+		//TreeShader.use();
+		//TreeShader.setMat4("projection", projection);
+		//TreeShader.setMat4("view", view);
+
+		//TreeShader.use();
+		//TreeShader.setInt("texture_diffuse1",0);
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, tree.textures_loaded[0].id);
+		//for (unsigned int i = 0; i < tree.meshes.size(); i++)
+		//{
+		//	glBindVertexArray(tree.meshes[i].VAO);
+		//	glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(tree.meshes[i].indices.size()), GL_UNSIGNED_INT, 0, amount);
+		//	glBindVertexArray(0);
+		//}
 		//isIstanced = true;
 		//shader.setBool("isIstanced", isIstanced);
 		//shader.setMat4("model", glm::mat4(1.0f));

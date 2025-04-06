@@ -37,6 +37,9 @@
     <Filter Include="源文件\Demo\Shadow">
       <UniqueIdentifier>{90b37e35-f3e5-42fe-a6c7-219ac27e542b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Demo\wall">
+      <UniqueIdentifier>{c8adc277-5a23-405f-85a9-7f66f8e6a924}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -123,6 +126,12 @@
     </None>
     <None Include="specular.GLSL">
       <Filter>头文件</Filter>
+    </None>
+    <None Include="vertexShaderSource_wall.GLSL">
+      <Filter>源文件\Demo\wall</Filter>
+    </None>
+    <None Include="fragmentShaderSource_wall.GLSL">
+      <Filter>源文件\Demo\wall</Filter>
     </None>
   </ItemGroup>
 </Project>

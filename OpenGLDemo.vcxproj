@@ -152,6 +152,7 @@
     <None Include="fragmentShaderSource_shadowmap.GLSL" />
     <None Include="fragmentShaderSource_skybox.GLSL" />
     <None Include="fragmentShaderSource_tree.GLSL" />
+    <None Include="fragmentShaderSource_wall.GLSL" />
     <None Include="fragmentShadow_depthmap.GLSL" />
     <None Include="fragmentSjaderSource_floor.GLSL" />
     <None Include="specular.GLSL" />
@@ -163,6 +164,7 @@
     <None Include="vertexShaderSource_shadowmap.GLSL" />
     <None Include="vertexShaderSource_skybox.GLSL" />
     <None Include="vertexShaderSource_tree.GLSL" />
+    <None Include="vertexShaderSource_wall.GLSL" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
